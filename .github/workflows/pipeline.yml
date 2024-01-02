@@ -7,8 +7,6 @@ on:
   pull_request:
     branches: [master]
     types: [opened, synchronize]
-env:
-  COMMIT_MESSAGES: ${{ join(github.event.commits.*.message,';') }}
 
 jobs:
   simple_deployment_pipeline:
@@ -36,7 +34,7 @@ jobs:
   tag_and_deploy:
     runs-on: ubuntu-20.04
     needs: simple_deployment_pipeline
-    if: ${{ github.event_name == 'push' && !contains(env.COMMIT_MESSAGES, '#skip') }}
+    if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message,';'), '#skip') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
