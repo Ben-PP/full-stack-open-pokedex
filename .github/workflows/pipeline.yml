@@ -48,14 +48,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.POKEDEX_GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
       - name: send success notification
-        uses: rjstone/discord-webhook@v1.0.4
+        uses: rjstone/discord-webhook-notify@v1.0.4
         if: success()
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           severity: info
           details: New version deployed!
       - name: Something went wrong during build
-        uses: rjstone/discord-webhook@v1.0.4
+        uses: rjstone/discord-webhook-notify@v1.0.4
         if: ${{ !success() }}
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
