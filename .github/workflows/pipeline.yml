@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: "16"
       - name: Install dependencies
         run: npm install
       - name: Check style
@@ -48,16 +48,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.POKEDEX_GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
       - name: send success notification
-          uses: rjstone/discord-webhook@v1.0.4
-          if: success()
-          with:
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-            severity: info
-            details: New version deployed!
+        uses: rjstone/discord-webhook@v1.0.4
+        if: success()
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: info
+          details: New version deployed!
       - name: Something went wrong during build
-          uses: rjstone/discord-webhook@v1.0.4
-          if: ${{ !success() }}
-          with:
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-            severity: error
-            details: There was an error during build!
+        uses: rjstone/discord-webhook@v1.0.4
+        if: ${{ !success() }}
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: error
+          details: There was an error during build!
