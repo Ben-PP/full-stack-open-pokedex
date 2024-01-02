@@ -35,14 +35,12 @@ jobs:
   tag_and_deploy:
     runs-on: ubuntu-20.04
     needs: simple_deployment_pipeline
+    if: ${{ github.event_name == 'push' && !contains(env.COMMIT_MESSAGES, '#skip') }}
     steps:
-      - if: ${{ github.event_name == 'push' && !contains(env.COMMIT_MESSAGES, '#skip') }}
         uses: actions/checkout@v3
       - name: Trigger render deployment
-        if: ${{ github.event_name == 'push' && !contains(env.COMMIT_MESSAGES, '#skip') }}
         run: curl https://api.render.com/deploy/${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_TOKEN }}
       - name: Bumb version and push tag
-        if: ${{ github.event_name == 'push' && !contains(env.COMMIT_MESSAGES, '#skip') }}
         uses: anothrNick/github-tag-action@1.67.0
         env:
           GITHUB_TOKEN: ${{ secrets.POKEDEX_GITHUB_TOKEN }}
